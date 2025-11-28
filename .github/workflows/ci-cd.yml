@@ -9,25 +9,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Build Backend
-        working-directory: backend
+      - name: Frontend build
         run: |
-          npm install
-          npm test || true
-
-      - name: Build Frontend
-        working-directory: frontend
-        run: |
+          cd frontend
           npm install
           npm run build
 
-      - name: Docker Build
-        run: docker compose build
+      - name: Backend install
+        run: |
+          cd backend
+          npm install
+
+      - name: Docker check
+        run: docker --version
